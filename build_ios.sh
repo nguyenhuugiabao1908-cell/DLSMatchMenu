@@ -17,7 +17,7 @@ fi
   -target arm64-apple-ios13.0 -isysroot "$SDK" \
   -fobjc-arc -fobjc-weak -fblocks -O2 ${EXTRA_CFLAGS+"${EXTRA_CFLAGS[@]}"} \
   -dynamiclib -Wl,-install_name,@rpath/DLSMatchMenu.dylib \
-  -framework Foundation -framework UIKit -framework QuartzCore \
+  -framework Foundation -framework UIKit -framework QuartzCore -framework CoreGraphics \
   source/DLSFloatingMenu.m source/DLSGameBridge.m \
   -o build/DLSMatchMenu.dylib
 file build/DLSMatchMenu.dylib
