@@ -1,0 +1,18 @@
+DLS Match Tools — 2026-10-29
+
+PREVIEW v1.1
+- Removed blocking demo anti popup.
+- Tap orb toggles panel; drag orb with touch/mouse.
+- Two demo actions show explanatory toast only.
+- Tested with Chromium/Playwright mobile emulation: tap-to-open PASS, tap-to-close PASS, drag PASS, click action PASS, JavaScript runtime errors: none.
+- In-app Quick Look viewers may disable JavaScript; open in a full browser or host as a webpage.
+
+iOS NATIVE CODE
+- Objective-C overlay and water-like animated colors provided.
+- On app initialization, Anti bridge is queried. It does NOT claim success when inactive.
+- End-match default OFF; experimental call to TIME_SetClock(90,0) available for one DLS UUID, untested for actual match ending.
+- +1 goal bridge: not available without identifying game-owned scoring path.
+- Anti: not implemented as a verified module; no promise of evading server-side enforcement.
+- Mach-O dylib NOT compiled here. Build script requires Xcode/iPhoneOS SDK and signing/integration by authorized user.
+
+No original SINOTOOL.dylib is repackaged here.

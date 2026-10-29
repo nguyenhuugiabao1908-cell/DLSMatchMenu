@@ -1,0 +1,36 @@
+name: Build iOS dylib
+on:
+  workflow_dispatch:
+    inputs:
+      experimental_clock:
+        description: "Enable experimental TIME_SetClock (tested DLS UUID only; not guaranteed to end match)"
+        required: false
+        type: boolean
+        default: false
+  push:
+    paths:
+      - 'source/**'
+      - 'build_ios.sh'
+      - '.github/workflows/ios-dylib.yml'
+jobs:
+  build:
+    runs-on: macos-15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build ARM64 dynamic library with Xcode iPhoneOS SDK
+        env:
+          DLS_ENABLE_EXPERIMENTAL_CLOCK: ${{ inputs.experimental_clock && '1' || '0' }}
+        run: bash ./build_ios.sh
+      - name: Verify Mach-O type
+        run: |
+          test -f build/DLSMatchMenu.dylib
+          file build/DLSMatchMenu.dylib | grep -E 'Mach-O.*dynamically linked shared library.*arm64'
+          xcrun otool -hv build/DLSMatchMenu.dylib
+          xcrun lipo -info build/DLSMatchMenu.dylib | grep -F 'arm64'
+      - name: Download build output as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DLSMatchMenu-arm64-unsigned
+          path: build/DLSMatchMenu.dylib
